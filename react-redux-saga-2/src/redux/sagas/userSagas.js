@@ -14,3 +14,17 @@ export function* findEmployeeSaga() {
 export function* watchFindEmployeeSaga() {
 	yield takeEvery(FIND_EMPLOYEE_SAGA, findEmployeeSaga)
 }
+
+export function* findCustomerSaga() {
+	const url = 'https://randomuser.me/api/'
+	const setHeaders = { headers: { 'Content-Type': 'application/json' } }
+	let res = yield fetch(url, { setHeaders })
+	res = yield res.json()
+	console.log(res)
+	let customer = res.results[0]
+	yield put({ type: FIND_CUSTOMER, payload: customer })
+}
+
+export function* watchFindCustomerSaga() {
+	yield takeEvery(FIND_CUSTOMER_SAGA, findCustomerSaga)
+}
