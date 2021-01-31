@@ -1,12 +1,13 @@
-import { createStore, applyMiddleware } from "redux";
-import { composeWithDevTools } from "redux-devtools-extension";
-import rootReducer from "./rootReducer";
-import ReduxThunk from "redux-thunk";
+import { createStore, applyMiddleware } from 'redux'
+import { composeWithDevTools } from 'redux-devtools-extension'
+import rootReducer from './rootReducer'
+import createSagaMiddleware from 'redux-saga'
+import rootSaga, { watchAddToCartSaga } from './sagas/cartSagas'
 
-const middleware = [ReduxThunk];
-const store = createStore(
-  rootReducer,
-  composeWithDevTools(applyMiddleware(...middleware))
-);
+const sagaMiddleware = createSagaMiddleware()
+const middleware = [ sagaMiddleware ]
+const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(...middleware)))
 
-export default store;
+sagaMiddleware.run(rootSaga)
+
+export default store
