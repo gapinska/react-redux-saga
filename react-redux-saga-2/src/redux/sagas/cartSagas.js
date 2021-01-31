@@ -1,4 +1,4 @@
-import { put, takeEvery, all, call, take, takeLatest } from 'redux-saga/effects'
+import { put, takeEvery, all, takeLatest } from 'redux-saga/effects'
 import { ADD_TO_CART, REMOVE_FROM_CART, ADD_TO_CART_SAGA, REMOVE_FROM_CART_SAGA } from '../types'
 
 const total = (newCart) => {
@@ -17,7 +17,7 @@ export function* addToCartSaga(action) {
 }
 
 export function* watchAddToCartSaga() {
-	yield takeEvery(ADD_TO_CART_SAGA, addToCartSaga)
+	yield takeLatest(ADD_TO_CART_SAGA, addToCartSaga)
 }
 
 export function* removeFromCartSaga(action) {
@@ -30,8 +30,4 @@ export function* removeFromCartSaga(action) {
 
 export function* watchRemoveFromCartSaga() {
 	yield takeEvery(REMOVE_FROM_CART_SAGA, removeFromCartSaga)
-}
-
-export default function* rootSaga() {
-	yield all([ watchAddToCartSaga(), watchRemoveFromCartSaga() ])
 }
